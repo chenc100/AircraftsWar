@@ -1,6 +1,7 @@
 package edu.hitsz.tool;
 
 public class PropFactory {
+
     public AbstractProp createProp(String prop, int locationX, int locationY, int speedX, int speedY){
         switch(prop){
             case "PropBlood":

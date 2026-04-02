@@ -58,21 +58,38 @@ class MobEnemy {
 }
 AbstractAircraft <|-- MobEnemy
 
-class SupEnemy{
+abstract class SupEnemy{
     + SupEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + shoot():List<BaseBullet>
+    + dropProp():void
 }
 MobEnemy <|-- SupEnemy
 
 class EliteEnemy{
+    - shootNum:int
+    - power:int
+    - direction:int
     + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + shoot():List<BaseBullet>
+    + dropProp():void
 }
 
 class ELitePlusEnemy{
-    + ELitePlusEnemy(int lLocationX, int locationY, int speedX, int speedY, int hp)
+    - shootNum:int
+    - power:int
+    - direction:int
+    + ELitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + shoot():List<BaseBullet>
+    + dropProp():void
 }
 
 class BossEnemy{
+    - shootNum:int
+    - power:int
+    - direction:int
     + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + shoot():List<BaseBullet>
+    + dropProp():void
 }
 
 SupEnemy <|-- EliteEnemy

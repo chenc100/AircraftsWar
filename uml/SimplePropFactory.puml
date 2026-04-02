@@ -1,0 +1,44 @@
+@startuml
+
+abstract class AbstractProp {
+    + AbstractProp(int locationX, int locationY,int speedX, int speedY)
+    + function(HeroAircraft heroAircraft):void
+}
+AbstractFlyingObject <|-- AbstractProp
+
+class PropBlood{
+    - {static}increaseHp:int
+    + PropBlood(int locationX, int locationY, int speedX, int speedY)
+    + function(HeroAircraft heroAircraft):void
+}
+AbstractProp <|-- PropBlood
+
+class PropBomb{
+    + PropBomb(int locationX, int locationY, int speedX, int speedY)
+    + function(HeroAircraft heroAircraft):void
+}
+AbstractProp <|-- PropBomb
+
+class PropBullet{
+    + PropBullet(int locationX, int locationY, int speedX, int speedY)
+    + function(HeroAircraft heroAircraft):void
+}
+AbstractProp <|-- PropBullet
+
+class PropBulletPlus{
+    + PropBulletPlus(int locationX, int locationY, int speedX, int speedY)
+    + function(HeroAircraft heroAircraft):void
+}
+AbstractProp <|-- PropBulletPlus
+
+class PropFreeze{
+    + PropFreeze(int locationX, int locationY, int speedX, int speedY)
+    + function(HeroAircraft heroAircraft):void
+}
+AbstractProp <|-- PropFreeze
+
+class PropFactory{
+    + AbstractProp createProp(String prop, int locationX, int locationY, int speedX, int speedY):AbstractProp
+}
+AbstractProp <.. PropFactory
+@enduml
