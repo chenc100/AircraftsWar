@@ -1,4 +1,7 @@
-package edu.hitsz.tool;
+package edu.hitsz.factory;
+
+import edu.hitsz.aircraft.AbstractSupEnemy;
+import edu.hitsz.tool.*;
 
 public class PropFactory {
 
@@ -18,4 +21,5 @@ public class PropFactory {
                 throw new IllegalArgumentException("Unknown Prop Type!");
         }
     }
+
 }

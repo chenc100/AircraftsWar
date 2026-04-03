@@ -3,7 +3,7 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.bullet.EnemyBullet;
+import edu.hitsz.factory.PropFactory;
 import edu.hitsz.tool.*;
 
 import javax.swing.*;
@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
-import java.util.concurrent.*;
 import java.util.Random;
 
 /**
@@ -28,15 +27,11 @@ public class Game extends JPanel {
     //时间间隔(ms)，控制刷新频率
     private final int timeInterval = 40;
 
-    //随机器，控制普通和精锐敌机随机生成
-    private final Random random = new Random();
-
     private final HeroAircraft heroAircraft;
     private final List<AbstractAircraft> enemyAircrafts;
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
-    private final PropFactory propFactory;
 
     //屏幕中出现的敌机最大数量
     private final int enemyMaxNumber = 5;
@@ -67,7 +62,6 @@ public class Game extends JPanel {
         heroBullets = new LinkedList<>();
         enemyBullets = new LinkedList<>();
         props = new LinkedList<>();
-        propFactory = new PropFactory();
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
@@ -91,12 +85,9 @@ public class Game extends JPanel {
                     enemySpawnCounter = 0;
                     // 产生普通敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
-
                         //随机创建普通敌机和精英敌机
                         //TODO 改为工厂模式
-                        int type = random.nextInt(2);
-
-                        if (type == 0){
+                        if (Math.random() < 0.5){
                             enemyAircrafts.add(new MobEnemy(
                                     (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
                                     (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
@@ -105,7 +96,7 @@ public class Game extends JPanel {
                                     30
                             ));
                         }
-                        else if(type == 1){
+                        else {
                             enemyAircrafts.add(new EliteEnemy(
                                     (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
                                     (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
@@ -114,6 +105,7 @@ public class Game extends JPanel {
                                     60
                             ));
                         }
+
                     }
                 }
 
@@ -218,7 +210,7 @@ public class Game extends JPanel {
                         //TODO 再敌机抽象父类中完成道具掉落
                         if (enemyAircraft instanceof EliteEnemy){
                             //按照百分之三十的概率掉落道具补给
-                            if (random.nextInt(100) < 30){
+                            if (Math.random() < 0.3){
                                 AbstractProp prop = ((EliteEnemy) enemyAircraft).dropProp(enemyAircraft);
                                 props.add(prop);
                             }
