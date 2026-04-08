@@ -2,12 +2,15 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
+import edu.hitsz.bulletStrategy.BulletStrategy;
+import edu.hitsz.bulletStrategy.Direct;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class ElitePlusEnemy extends AbstractSupEnemy {
-
+    //
+    private int shootNum = 2;
     @Override
     public double getDropProb(){
         return 1.0;
@@ -20,10 +23,7 @@ public class ElitePlusEnemy extends AbstractSupEnemy {
 
     public ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
-        super.shootNum = 2;
-        super.power = 12;
+        bulletStrategy = new Direct(shootNum);
     }
-
-
 
 }

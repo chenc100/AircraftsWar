@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Angled implements BulletStrategy{
-    private int direction = -1;
+    private int direction = 1;
     private int shootNum;
 
     public Angled(int shootNum){
@@ -16,12 +16,12 @@ public class Angled implements BulletStrategy{
     }
 
     @Override
-    public List<BaseBullet> setBulletShoot(AbstractSupEnemy enemy){
+    public List<BaseBullet> setShoot(int locationX, int locationY, int aircraftSpeedY){
         List<BaseBullet> res = new LinkedList<>();
-        int x = enemy.getLocationX() ;
-        int y = enemy.getLocationY() + direction*2;
+        int x = locationX ;
+        int y = locationY + direction*2;
         int speedX = 0;
-        int speedY = enemy.getSpeedY() + direction*5;
+        int speedY = aircraftSpeedY + direction*5;
         BaseBullet bullet;
         for(int i=0; i<shootNum; i++){
             // 子弹发射位置相对飞机位置向前偏移

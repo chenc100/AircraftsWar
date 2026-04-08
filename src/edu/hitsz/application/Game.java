@@ -89,18 +89,21 @@ public class Game extends JPanel {
                     // 产生普通敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         //随机创建普通敌机和精英敌机
-                        //TODO 改为工厂模式
-                        if (Math.random() < 0.1){
+                        //TODO 修改随机方法
+                        //TODO boss同一时间内只有一架
+                        double probability = Math.random();
+                        if (probability < 0.1){
                             enemyFactory = new MobFactory();
-                        } else if (Math.random()<0.2 && Math.random()>=0.1) {
+                        } else if (probability<0.2 && probability>=0.1) {
                             enemyFactory = new EliteFactory();
-                        } else if (Math.random()<0.3 && Math.random()>=0.2) {
+                        } else if (probability<0.3 && probability>=0.2) {
                             enemyFactory = new ElitePlusFactory();
-                        } else if (Math.random()>=0.3) {
+                        } else if (probability>=0.3) {
                             enemyFactory = new EliteProFactory();
                         }
 
                         enemyAircrafts.add(enemyFactory.createEnemy());
+
                     }
                 }
 
@@ -202,7 +205,6 @@ public class Game extends JPanel {
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         // 获得分数，产生道具补给
-                        //TODO 再敌机抽象父类中完成道具掉落
                         if (enemyAircraft instanceof AbstractSupEnemy){
                             props.add( ((AbstractSupEnemy)enemyAircraft).dropProp()) ;
                         }
@@ -218,11 +220,8 @@ public class Game extends JPanel {
         }
 
         //  我方获得道具，道具生效
-        //System.out.println("=== 道具生效检测开始，当前道具数量: " + props.size() + " ===");
         for (AbstractProp prop : props){
-            //System.out.println("检测道具: " + prop.getClass().getSimpleName() + ", 位置: (" + prop.getLocationX() + ", " + prop.getLocationY() + ")");
             if (prop.notValid()){
-                //System.out.println("wuxiao");
                 continue;
             }
             if (prop.crash(heroAircraft)){
@@ -251,6 +250,7 @@ public class Game extends JPanel {
     /**
      * 检查游戏是否结束，若结束：关闭线程池
      */
+
     private void checkResultAction(){
         // 游戏结束检查英雄机是否存活
         if (heroAircraft.getHp() <= 0) {

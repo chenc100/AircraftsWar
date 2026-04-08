@@ -2,6 +2,8 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.HeroBullet;
+import edu.hitsz.bulletStrategy.BulletStrategy;
+import edu.hitsz.bulletStrategy.Direct;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,16 +18,20 @@ public class HeroAircraft extends AbstractAircraft {
     private int shootNum = 1;
 
     //子弹威力
-    private int power = 30;
+    private int power = 1000;
 
     //子弹射击方向 (向上发射：-1，向下发射：1)
     private int direction = -1;
+
+    //子弹发射方法
+    //private BulletStrategy bulletStrategy;
 
     //懒汉式单例类
     private static HeroAircraft instance = null;
 
     private HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp){
         super(locationX, locationY, speedX, speedY, hp);
+        //bulletStrategy = new Direct(shootNum);
     }
 
     public static synchronized HeroAircraft getInstance(int locationX, int locationY, int speedX, int speedY, int hp){

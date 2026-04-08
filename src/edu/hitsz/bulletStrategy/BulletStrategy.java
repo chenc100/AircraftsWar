@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface BulletStrategy {
     int power = 10;
-    List<BaseBullet> setBulletShoot(AbstractSupEnemy enemy);
+
+    List<BaseBullet> setShoot(int loactionX, int loacationY, int aircraftSpeedY);
 }

@@ -1,5 +1,8 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.bulletStrategy.BulletStrategy;
+import edu.hitsz.bulletStrategy.Direct;
+
 /**
  * 精英敌机
  * 可以射击
@@ -7,6 +10,8 @@ package edu.hitsz.aircraft;
  */
 
 public class EliteEnemy extends AbstractSupEnemy {
+
+    private int shootNum = 1;
 
     @Override
     public double getDropProb(){
@@ -20,7 +25,9 @@ public class EliteEnemy extends AbstractSupEnemy {
 
     public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp){
         super(locationX, locationY, speedX, speedY, hp);
+        bulletStrategy = new Direct(shootNum);
     }
+
 
 
 
