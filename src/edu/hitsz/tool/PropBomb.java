@@ -10,6 +10,6 @@ public class PropBomb extends AbstractProp{
 
     @Override
     public void function(HeroAircraft heroAircraft){
-
+        System.out.println("Bomb valid!");
     }
 }

@@ -9,5 +9,7 @@ public class PropFreeze extends AbstractProp{
     }
 
     @Override
-    public void function(HeroAircraft heroAircraft){}
+    public void function(HeroAircraft heroAircraft){
+        System.out.println("Freeze Active!");
+    }
 }

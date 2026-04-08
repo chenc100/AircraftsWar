@@ -58,48 +58,54 @@ class MobEnemy {
 }
 AbstractAircraft <|-- MobEnemy
 
-abstract class SupEnemy{
+abstract class AbstractSupEnemy{
+    # shootNum:int
+    # power:int
+    - direction:int
+    - random : Random
+    - propFactory : PropFactory
     + SupEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + shoot():List<BaseBullet>
-    + dropProp():void
+    + {abstract} getDropProb():double
+    + {abstract} getPropType():int
+    + dropProp():AbstractProp
 }
-MobEnemy <|-- SupEnemy
+MobEnemy <|-- AbstractSupEnemy
 
 class EliteEnemy{
-    - shootNum:int
-    - power:int
-    - direction:int
     + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + shoot():List<BaseBullet>
-    + dropProp():void
+    + getDropProb():double
+    + getPropType():int
 }
 
-class ELitePlusEnemy{
-    - shootNum:int
-    - power:int
-    - direction:int
-    + ELitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + shoot():List<BaseBullet>
-    + dropProp():void
+class ElitePlusEnemy{
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getDropProb():double
+    + getPropType():int
+}
+
+class EliteProEnemy{
+    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getDropProb():double
+    + getPropType():int
 }
 
 class BossEnemy{
-    - shootNum:int
-    - power:int
-    - direction:int
+    + getDropProb():double
+    + getPropType():int
     + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + shoot():List<BaseBullet>
-    + dropProp():void
 }
 
-SupEnemy <|-- EliteEnemy
-SupEnemy <|-- ElitePlusEnemy
-SupEnemy <|-- BossEnemy
+AbstractSupEnemy <|-- EliteEnemy
+AbstractSupEnemy <|-- ElitePlusEnemy
+AbstractSupEnemy <|-- EliteProEnemy
+AbstractSupEnemy <|-- BossEnemy
 
 abstract class AbstractProp
 {
     + AbstractProp(int locationX, int locationY, int speedX, int speedY)
-    + function():void
+    + {abstract}function():void
 }
 AbstractFlyingObject <|-- AbstractProp
 

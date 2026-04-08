@@ -16,17 +16,17 @@ import java.util.Random;
 public abstract class AbstractSupEnemy extends MobEnemy{
 
     //每次射击发射子弹数量
-    private int shootNum = 1;
+    protected int shootNum = 1;
 
     //子弹威力
-    private int power = 30;
+    protected int power = 30;
 
     //子弹射击方向 (向上发射：-1，向下发射：1)
     private int direction = 1;
-    //随机器
-    Random random = new Random();
+
+    private Random random = new Random();
     //创建道具工厂
-    PropFactory propFactory = new PropFactory();
+    private PropFactory propFactory = new PropFactory();
 
     public AbstractSupEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
@@ -48,28 +48,18 @@ public abstract class AbstractSupEnemy extends MobEnemy{
         return res;
     }
 
-    public AbstractProp dropProp(AbstractAircraft enemy){
-        int type;
-        if (enemy instanceof EliteEnemy){
-            type = random.nextInt(3);
+    public abstract double getDropProb();
+    public abstract int getPropType();
+
+    public AbstractProp dropProp(){
+        int x = this.getLocationX();
+        int y = this.getLocationY();
+
+        if (Math.random() < getDropProb()){
+            return propFactory.createProp(random.nextInt(getPropType()), x, y, 0, 10);
         }
-        else {
-            type = random.nextInt(5);
-        }
-        switch (type){
-            case 0:
-                return propFactory.createProp("PropBlood", enemy.getLocationX(), enemy.getLocationY(), 0, 5);
-            case 1:
-                return propFactory.createProp("PropBullet", enemy.getLocationX(), enemy.getLocationY(), 0, 5);
-            case 2:
-                return propFactory.createProp("PropBulletPlus", enemy.getLocationX(), enemy.getLocationY(), 0, 5);
-            case 3:
-                return propFactory.createProp("PropBomb", enemy.getLocationX(), enemy.getLocationY(), 0, 5);
-            case 4:
-                return propFactory.createProp("PropFreeze", enemy.getLocationX(), enemy.getLocationY(), 0, 5);
-            default:
-                return null;
-        }
+
+        return null;
     }
 
 }

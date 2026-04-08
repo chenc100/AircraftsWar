@@ -5,17 +5,17 @@ import edu.hitsz.tool.*;
 
 public class PropFactory {
 
-    public AbstractProp createProp(String prop, int locationX, int locationY, int speedX, int speedY){
+    public AbstractProp createProp(int prop, int locationX, int locationY, int speedX, int speedY){
         switch(prop){
-            case "PropBlood":
+            case 0:
                 return new PropBlood(locationX, locationY, speedX, speedY);
-            case "PropBomb" :
+            case 1 :
                 return new PropBomb(locationX, locationY, speedX, speedY);
-            case "PropBullet":
+            case 2 :
                 return new PropBullet(locationX, locationY, speedX, speedY);
-            case "PropBulletPlus":
+            case 3 :
                 return new PropBulletPlus(locationX, locationY, speedX, speedY);
-            case "PropFreeze":
+            case 4 :
                 return new PropFreeze(locationX, locationY, speedX, speedY);
             default:
                 throw new IllegalArgumentException("Unknown Prop Type!");

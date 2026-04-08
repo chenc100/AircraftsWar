@@ -1,3 +1,94 @@
 @startuml
+class MobEnemy {
+    - shootNum:int
+    - power:int
+    - direction:int
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+}
 
+
+abstract class AbstractSupEnemy{
+    # shootNum:int
+    # power:int
+    - direction:int
+    - random : Random
+    - propFactory : PropFactory
+    + SupEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + shoot():List<BaseBullet>
+    + {abstract} getDropProb():double
+    + {abstract} getPropType():int
+    + dropProp():AbstractProp
+}
+MobEnemy <|-- AbstractSupEnemy
+
+class EliteEnemy{
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getDropProb():double
+    + getPropType():int
+}
+
+class ElitePlusEnemy{
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getDropProb():double
+    + getPropType():int
+}
+
+class EliteProEnemy{
+    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getDropProb():double
+    + getPropType():int
+}
+
+class BossEnemy{
+    + getDropProb():double
+    + getPropType():int
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + shoot():List<BaseBullet>
+}
+
+interface EnemyFactory{
+    {abstract}createEnemy(): AbstractEnemy
+}
+
+class EliteFactory{
+    + createEnemy():EliteEnemy
+}
+EnemyFactory <|.. EliteFactory
+
+class ELitePlusFactory{
+    + createEnemy():ElitePlusEnemy
+}
+EnemyFactory <|.. ELitePlusFactory
+
+class EliteProFactory{
+    + createEnemy():ElitePropFactory
+}
+EnemyFactory <|.. EliteProFactory
+
+class MobFactory{
+    + createEnemy():MobEnemy
+}
+EnemyFactory <|.. MobFactory
+
+class BossFactory{
+    + createEnemy():BossEnemy
+}
+EnemyFactory <|.. BossFactory
+
+EliteEnemy <.. EliteFactory
+ElitePlusEnemy <.. ELitePlusFactory
+EliteProEnemy <.. EliteProFactory
+MobEnemy <.. MobFactory
+BossEnemy <.. BossFactory
+
+AbstractSupEnemy <|-- EliteEnemy
+AbstractSupEnemy <|-- ElitePlusEnemy
+AbstractSupEnemy <|-- EliteProEnemy
+AbstractSupEnemy <|-- BossEnemy
+
+AbstractSupEnemy <.. Game
+MobEnemy <.. Game
+EnemyFactory <.. Game
 @enduml

@@ -3,7 +3,7 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.factory.PropFactory;
+import edu.hitsz.factory.*;
 import edu.hitsz.tool.*;
 
 import javax.swing.*;
@@ -33,6 +33,9 @@ public class Game extends JPanel {
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
 
+    //敌机工厂
+    private EnemyFactory enemyFactory;
+
     //屏幕中出现的敌机最大数量
     private final int enemyMaxNumber = 5;
 
@@ -55,7 +58,7 @@ public class Game extends JPanel {
         heroAircraft = HeroAircraft.getInstance(
                 Main.WINDOW_WIDTH / 2,
                 Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
-                0, 0, 100
+                0, 0, 10000
         );
 
         enemyAircrafts = new LinkedList<>();
@@ -87,25 +90,17 @@ public class Game extends JPanel {
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         //随机创建普通敌机和精英敌机
                         //TODO 改为工厂模式
-                        if (Math.random() < 0.5){
-                            enemyAircrafts.add(new MobEnemy(
-                                    (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
-                                    (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
-                                    0,
-                                    10,
-                                    30
-                            ));
-                        }
-                        else {
-                            enemyAircrafts.add(new EliteEnemy(
-                                    (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
-                                    (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
-                                    0,
-                                    8,
-                                    60
-                            ));
+                        if (Math.random() < 0.1){
+                            enemyFactory = new MobFactory();
+                        } else if (Math.random()<0.2 && Math.random()>=0.1) {
+                            enemyFactory = new EliteFactory();
+                        } else if (Math.random()<0.3 && Math.random()>=0.2) {
+                            enemyFactory = new ElitePlusFactory();
+                        } else if (Math.random()>=0.3) {
+                            enemyFactory = new EliteProFactory();
                         }
 
+                        enemyAircrafts.add(enemyFactory.createEnemy());
                     }
                 }
 
@@ -208,14 +203,9 @@ public class Game extends JPanel {
                     if (enemyAircraft.notValid()) {
                         // 获得分数，产生道具补给
                         //TODO 再敌机抽象父类中完成道具掉落
-                        if (enemyAircraft instanceof EliteEnemy){
-                            //按照百分之三十的概率掉落道具补给
-                            if (Math.random() < 0.3){
-                                AbstractProp prop = ((EliteEnemy) enemyAircraft).dropProp(enemyAircraft);
-                                props.add(prop);
-                            }
+                        if (enemyAircraft instanceof AbstractSupEnemy){
+                            props.add( ((AbstractSupEnemy)enemyAircraft).dropProp()) ;
                         }
-                        //击毁敌机加分
                         score += 10;
                     }
                 }
@@ -228,8 +218,11 @@ public class Game extends JPanel {
         }
 
         //  我方获得道具，道具生效
+        //System.out.println("=== 道具生效检测开始，当前道具数量: " + props.size() + " ===");
         for (AbstractProp prop : props){
+            //System.out.println("检测道具: " + prop.getClass().getSimpleName() + ", 位置: (" + prop.getLocationX() + ", " + prop.getLocationY() + ")");
             if (prop.notValid()){
+                //System.out.println("wuxiao");
                 continue;
             }
             if (prop.crash(heroAircraft)){
