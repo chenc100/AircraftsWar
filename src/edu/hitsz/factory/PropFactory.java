@@ -1,6 +1,5 @@
 package edu.hitsz.factory;
 
-import edu.hitsz.aircraft.AbstractSupEnemy;
 import edu.hitsz.tool.*;
 
 public class PropFactory {

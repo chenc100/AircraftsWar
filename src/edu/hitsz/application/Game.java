@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
-import java.util.Random;
 
 /**
  * 游戏主面板，游戏启动
@@ -83,6 +82,9 @@ public class Game extends JPanel {
             @Override
             public void run() {
 
+                System.out.println(ImageManager.HERO_IMAGE.getHeight());
+                System.out.println(ImageManager.HERO_IMAGE.getWidth());
+
                 enemySpawnCounter++;
                 if (enemySpawnCounter >= enemySpawnCycle) {
                     enemySpawnCounter = 0;
@@ -91,19 +93,31 @@ public class Game extends JPanel {
                         //随机创建普通敌机和精英敌机
                         //TODO 修改随机方法
                         //TODO boss同一时间内只有一架
+                        int bossFlag = 0;
                         double probability = Math.random();
                         if (probability < 0.1){
                             enemyFactory = new MobFactory();
-                        } else if (probability<0.2 && probability>=0.1) {
+                        } else if (probability < 0.2) {
                             enemyFactory = new EliteFactory();
-                        } else if (probability<0.3 && probability>=0.2) {
+                        } else if (probability < 0.3) {
                             enemyFactory = new ElitePlusFactory();
-                        } else if (probability>=0.3) {
+                        } else if (probability >= 0.3) {
                             enemyFactory = new EliteProFactory();
                         }
 
                         enemyAircrafts.add(enemyFactory.createEnemy());
-
+                        //boss一段时间内只有一架，score每增加100分出现一架
+                        if (score % 100 == 0 && score != 0){
+                            for (AbstractAircraft enemy : enemyAircrafts){
+                                if (enemy instanceof BossEnemy){
+                                    bossFlag = 1;
+                                    break;
+                                }
+                            }
+                            if (bossFlag == 0){
+                                enemyAircrafts.add(new BossFactory().createEnemy());
+                            }
+                        }
                     }
                 }
 
@@ -205,8 +219,8 @@ public class Game extends JPanel {
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         // 获得分数，产生道具补给
-                        if (enemyAircraft instanceof AbstractSupEnemy){
-                            props.add( ((AbstractSupEnemy)enemyAircraft).dropProp()) ;
+                        if (enemyAircraft instanceof AbstractEnemy){
+                            props.add( ((AbstractEnemy)enemyAircraft).dropProp()) ;
                         }
                         score += 10;
                     }

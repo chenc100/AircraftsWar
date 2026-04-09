@@ -1,6 +1,5 @@
 package edu.hitsz.aircraft;
 
-import edu.hitsz.bulletStrategy.BulletStrategy;
 import edu.hitsz.bulletStrategy.Direct;
 
 /**
@@ -9,7 +8,7 @@ import edu.hitsz.bulletStrategy.Direct;
  * 仅掉落加血，火力，超级火力道具
  */
 
-public class EliteEnemy extends AbstractSupEnemy {
+public class EliteEnemy extends AbstractEnemy {
 
     private int shootNum = 1;
 
@@ -27,8 +26,5 @@ public class EliteEnemy extends AbstractSupEnemy {
         super(locationX, locationY, speedX, speedY, hp);
         bulletStrategy = new Direct(shootNum);
     }
-
-
-
 
 }

@@ -1,8 +1,11 @@
 package edu.hitsz.tool;
 
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.bulletStrategy.Angled;
 
 public class PropBullet extends AbstractProp{
+
+    private int shootNum = 3;
 
     public PropBullet(int locationX, int locationY, int speedX, int speedY){
         super(locationX, locationY, speedX, speedY);
@@ -10,6 +13,6 @@ public class PropBullet extends AbstractProp{
 
     @Override
     public void function(HeroAircraft heroAircraft){
-        System.out.println("Fire Supply Active!");
+        heroAircraft.setStrategy(new Angled(shootNum));
     }
 }

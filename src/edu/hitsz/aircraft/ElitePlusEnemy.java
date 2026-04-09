@@ -1,14 +1,8 @@
 package edu.hitsz.aircraft;
 
-import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.EnemyBullet;
-import edu.hitsz.bulletStrategy.BulletStrategy;
 import edu.hitsz.bulletStrategy.Direct;
 
-import java.util.LinkedList;
-import java.util.List;
-
-public class ElitePlusEnemy extends AbstractSupEnemy {
+public class ElitePlusEnemy extends AbstractEnemy {
     //
     private int shootNum = 2;
     @Override

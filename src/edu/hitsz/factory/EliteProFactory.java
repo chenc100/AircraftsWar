@@ -1,7 +1,6 @@
 package edu.hitsz.factory;
 
 import edu.hitsz.aircraft.AbstractAircraft;
-import edu.hitsz.aircraft.AbstractSupEnemy;
 import edu.hitsz.aircraft.EliteProEnemy;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
@@ -13,6 +12,6 @@ public class EliteProFactory implements EnemyFactory {
                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
                 5,
                 8,
-                100);
+                60);
     }
 }
