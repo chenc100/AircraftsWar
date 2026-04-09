@@ -1,27 +1,24 @@
 @startuml
+
 class MobEnemy {
-    - shootNum:int
-    - power:int
-    - direction:int
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + forward():void
     + shoot():List<BaseBullet>
 }
 
 
-abstract class AbstractSupEnemy{
-    # shootNum:int
-    # power:int
-    - direction:int
+abstract class AbstractEnemy{
+    - propSpeedY:int
     - random : Random
     - propFactory : PropFactory
+    # bulletStrategy : BulletStrategy
     + SupEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
     + shoot():List<BaseBullet>
     + {abstract} getDropProb():double
     + {abstract} getPropType():int
     + dropProp():AbstractProp
 }
-MobEnemy <|-- AbstractSupEnemy
+AbstractEnemy <|-- MobEnemy
 
 class EliteEnemy{
     + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
@@ -45,7 +42,6 @@ class BossEnemy{
     + getDropProb():double
     + getPropType():int
     + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + shoot():List<BaseBullet>
 }
 
 interface EnemyFactory{
@@ -83,12 +79,12 @@ EliteProEnemy <.. EliteProFactory
 MobEnemy <.. MobFactory
 BossEnemy <.. BossFactory
 
-AbstractSupEnemy <|-- EliteEnemy
-AbstractSupEnemy <|-- ElitePlusEnemy
-AbstractSupEnemy <|-- EliteProEnemy
-AbstractSupEnemy <|-- BossEnemy
+AbstractEnemy <|-- EliteEnemy
+AbstractEnemy <|-- ElitePlusEnemy
+AbstractEnemy <|-- EliteProEnemy
+AbstractEnemy <|-- BossEnemy
 
-AbstractSupEnemy <.. Game
+AbstractEnemy <.. Game
 MobEnemy <.. Game
 EnemyFactory <.. Game
 @enduml

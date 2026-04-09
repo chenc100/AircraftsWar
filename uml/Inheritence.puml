@@ -39,9 +39,9 @@ abstract class AbstractAircraft
 class HeroAircraft {
     - {static} instance : HeroAircraft
     - shootNum:int
-    - power:int
-    - direction:int
+    - bulletStrategy:BulletStrategy
     - HeroAircraft(int LocationX, int LocationY, int speedX, int speedY, int hp)
+    + setStrategy(BulletStrategy bulletStrategy)
     + forward():void
     + shoot():List<BaseBullet>
     + {static} getInstance(int LocationX, int LocationY, int speedX, int speedY, int hp) : HeroAircraft
@@ -49,58 +49,56 @@ class HeroAircraft {
 AbstractAircraft <|-- HeroAircraft
 
 class MobEnemy {
-    - shootNum:int
-    - power:int
-    - direction:int
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + forward():void
     + shoot():List<BaseBullet>
 }
-AbstractAircraft <|-- MobEnemy
+AbstractEnemy <|-- MobEnemy
 
-abstract class AbstractSupEnemy{
-    # shootNum:int
-    # power:int
-    - direction:int
+abstract class AbstractEnemy{
+    - propSpeedY:int
     - random : Random
     - propFactory : PropFactory
-    + SupEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + AbstractEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
     + shoot():List<BaseBullet>
     + {abstract} getDropProb():double
     + {abstract} getPropType():int
     + dropProp():AbstractProp
 }
-MobEnemy <|-- AbstractSupEnemy
+AbstractAircraft <|-- AbstractEnemy
 
 class EliteEnemy{
+    - shootNum:int
     + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + getDropProb():double
     + getPropType():int
 }
 
 class ElitePlusEnemy{
+    - shootNum:int
     + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + getDropProb():double
     + getPropType():int
 }
 
 class EliteProEnemy{
+    - shootNum:int
     + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + getDropProb():double
     + getPropType():int
 }
 
 class BossEnemy{
+    - shootNum:int
     + getDropProb():double
     + getPropType():int
     + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + shoot():List<BaseBullet>
 }
 
-AbstractSupEnemy <|-- EliteEnemy
-AbstractSupEnemy <|-- ElitePlusEnemy
-AbstractSupEnemy <|-- EliteProEnemy
-AbstractSupEnemy <|-- BossEnemy
+AbstractEnemy <|-- EliteEnemy
+AbstractEnemy <|-- ElitePlusEnemy
+AbstractEnemy <|-- EliteProEnemy
+AbstractEnemy <|-- BossEnemy
 
 abstract class AbstractProp
 {
@@ -110,28 +108,29 @@ abstract class AbstractProp
 AbstractFlyingObject <|-- AbstractProp
 
 class PropBlood{
+    - {static} increaseBlood:int
     + PropBlood(int locationX, int locationY, int speedX, int speedY)
-    + function():void
+    + function(HeroAircraft heroAircraft):void
 }
 
 class PropBomb{
     + PropBomb(int locationX, int locationY, int speedX, int speedY)
-    + function():void
+    + function(HeroAircraft heroAircraft)):void
 }
 
 class PropBullet{
     + PropBullet(int locationX, int locationY, int speedX, int speedY)
-    + function():void
+    + function(HeroAircraft heroAircraft)):void
 }
 
 class PropBulletPlus{
     + PropBulletPlus(int locationX, int locationY, int speedX, int speedY)
-    + function():void
+    + function(HeroAircraft heroAircraft)):void
 }
 
 class PropFreeze{
     + PropFreeze(int locationX, int locationY, int speedX, int speedY)
-    + function():void
+    + function(HeroAircraft heroAircraft)):void
 }
 
 AbstractProp <|-- PropFreeze
