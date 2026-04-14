@@ -73,11 +73,11 @@ class BossFactory{
 }
 EnemyFactory <|.. BossFactory
 
-EliteEnemy <.. EliteFactory
-ElitePlusEnemy <.. ELitePlusFactory
-EliteProEnemy <.. EliteProFactory
-MobEnemy <.. MobFactory
-BossEnemy <.. BossFactory
+EliteEnemy <.. EliteFactory: create
+ElitePlusEnemy <.. ELitePlusFactory: create
+EliteProEnemy <.. EliteProFactory: create
+MobEnemy <.. MobFactory: create
+BossEnemy <.. BossFactory: create
 
 AbstractEnemy <|-- EliteEnemy
 AbstractEnemy <|-- ElitePlusEnemy

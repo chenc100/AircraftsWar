@@ -1,0 +1,15 @@
+@startuml
+class HeroAircraft {
+    - {static} instance : HeroAircraft
+    - shootNum:int
+    - bulletStrategy:BulletStrategy
+    - HeroAircraft(int LocationX, int LocationY, int speedX, int speedY, int hp)
+    + setStrategy(BulletStrategy bulletStrategy)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + {static} getInstance(int LocationX, int LocationY, int speedX, int speedY, int hp) : HeroAircraft
+}
+
+HeroAircraft --> HeroAircraft : static instance
+
+@enduml

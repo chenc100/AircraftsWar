@@ -11,34 +11,34 @@ class PropBlood{
     + PropBlood(int locationX, int locationY, int speedX, int speedY)
     + function(HeroAircraft heroAircraft):void
 }
-AbstractProp <|-- PropBlood
+AbstractProp <|-- PropBlood: instantiate
 
 class PropBomb{
     + PropBomb(int locationX, int locationY, int speedX, int speedY)
     + function(HeroAircraft heroAircraft):void
 }
-AbstractProp <|-- PropBomb
+AbstractProp <|-- PropBomb: instantiate
 
 class PropBullet{
     + PropBullet(int locationX, int locationY, int speedX, int speedY)
     + function(HeroAircraft heroAircraft):void
 }
-AbstractProp <|-- PropBullet
+AbstractProp <|-- PropBullet: instantiate
 
 class PropBulletPlus{
     + PropBulletPlus(int locationX, int locationY, int speedX, int speedY)
     + function(HeroAircraft heroAircraft):void
 }
-AbstractProp <|-- PropBulletPlus
+AbstractProp <|-- PropBulletPlus: instantiate
 
 class PropFreeze{
     + PropFreeze(int locationX, int locationY, int speedX, int speedY)
     + function(HeroAircraft heroAircraft):void
 }
-AbstractProp <|-- PropFreeze
+AbstractProp <|-- PropFreeze : instantiate
 
 class PropFactory{
     + AbstractProp createProp(String prop, int locationX, int locationY, int speedX, int speedY):AbstractProp
 }
-AbstractProp <.. PropFactory
+AbstractProp <.. PropFactory : create
 @enduml

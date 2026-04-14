@@ -57,7 +57,7 @@ public abstract class AbstractEnemy extends AbstractAircraft{
         List<AbstractProp> props = new LinkedList<>();
         if (Math.random() < getDropProb()){
             for (int i=0; i<dropNum; i++){
-                props.add( propFactory.createProp(random.nextInt(getPropType()), x+(i * 2 - dropNum + 1) * 10, y, 0, propSpeedY));
+                props.add( propFactory.createProp(random.nextInt(getPropType()), x+(i * 2 - dropNum + 1) * 15, y, 0, propSpeedY));
             }
         }
         return props;

@@ -1,0 +1,43 @@
+@startuml
+interface BulletStrategy{
+    + {static}power : int
+    + {abstract}setShoot(AbstractAircraft aircraft) ：List<BaseBullet>
+}
+
+class Circle{
+    - shootNum : int
+    + Circle(int shootNum)
+    + setShoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+BulletStrategy <|.. Circle
+
+class Angled{
+    - shootNum : int
+    + Angled(int shootNum)
+    + setShoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+BulletStrategy <|.. Angled
+
+class Direct{
+    - shootNum : int
+    + Angled(int shootNum)
+    + setShoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+BulletStrategy <|.. Direct
+
+abstract class AbstractAircraft{
+	# maxHp:int
+    # hp:int
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease):void
+    + getHp():int
+    + {abstract} shoot():List<BaseBullet>
+}
+
+class HeroAircraft{
+    +setStrategy(BulletStrategy strategy):void
+}
+
+AbstractAircraft --> BulletStrategy : use
+AbstractAircraft <|-- HeroAircraft
+@enduml

@@ -47,6 +47,7 @@ class HeroAircraft {
     + {static} getInstance(int LocationX, int LocationY, int speedX, int speedY, int hp) : HeroAircraft
 }
 AbstractAircraft <|-- HeroAircraft
+HeroAircraft --> HeroAircraft : static instance
 
 class MobEnemy {
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
