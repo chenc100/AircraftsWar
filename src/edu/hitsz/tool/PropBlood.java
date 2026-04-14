@@ -12,8 +12,8 @@ public class PropBlood extends AbstractProp{
 
     @Override
     public void function(HeroAircraft heroAircraft){
-        if (heroAircraft.getHp() + increaseBlood >= 100){
-            heroAircraft.decreaseHp(heroAircraft.getHp() - 100);
+        if (heroAircraft.getHp() + increaseBlood >= 10000){
+            heroAircraft.decreaseHp(heroAircraft.getHp() - 10000);
         }
         else{
             heroAircraft.decreaseHp(-increaseBlood);

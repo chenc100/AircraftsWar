@@ -8,7 +8,7 @@ public class EliteProEnemy extends AbstractEnemy {
 
     @Override
     public double getDropProb(){
-        return 1.0;
+        return 0.6;
     }
 
     @Override
@@ -18,6 +18,7 @@ public class EliteProEnemy extends AbstractEnemy {
 
     public EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp){
         super(locationX, locationY, speedX, speedY, hp);
+        super.dropNum = 1;
         bulletStrategy = new Angled(shootNum);
     }
 

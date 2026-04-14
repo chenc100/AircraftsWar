@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Circle implements BulletStrategy{
+
     private int shootNum;
 
     public Circle(int shootNum){
@@ -22,31 +23,34 @@ public class Circle implements BulletStrategy{
     public List<BaseBullet> setShoot(AbstractAircraft aircraft) {
         List<BaseBullet> bullets = new LinkedList<>();
 
-        int speed = 3;
-        int radius;
-
-        if (aircraft instanceof HeroAircraft) {
-            radius = 45;
-        } else {
-            radius = 110;
-        }
+        double speed = 3.0;
+        double radius = (aircraft instanceof HeroAircraft) ? 45.0 : 110.0;
 
         for (int i = 0; i < shootNum; i++) {
 
-            double angle = i * (360.0 / shootNum);
-            double rad = Math.toRadians(angle);
+            double angle = i * (2 * Math.PI / shootNum);
+            double cos = Math.cos(angle);
+            double sin = Math.sin(angle);
 
-            int bulletX = aircraft.getLocationX() + (int) (radius * Math.cos(rad));
-            int bulletY = aircraft.getLocationY() - (int) (radius * Math.sin(rad));
+            double bulletX = aircraft.getLocationX() + radius * cos;
+            double bulletY = aircraft.getLocationY() - radius * sin;
 
-            int dx = (int) (speed * Math.cos(rad));
-            int dy = -(int) (speed * Math.sin(rad));
+            double dx = speed * cos;
+            double dy = -speed * sin;
 
             BaseBullet bullet;
             if (aircraft instanceof AbstractEnemy) {
-                bullet = new EnemyBullet(bulletX, bulletY, dx, dy, power);
+                bullet = new EnemyBullet(
+                        (int) bulletX, (int) bulletY,
+                        (int) (dx * 5), (int) (dy * 5),
+                        power
+                );
             } else {
-                bullet = new HeroBullet(bulletX, bulletY, dx, dy, power);
+                bullet = new HeroBullet(
+                        (int) bulletX, (int) bulletY,
+                        (int) (dx * 5), (int) (dy * 5),
+                        power
+                );
             }
 
             bullets.add(bullet);

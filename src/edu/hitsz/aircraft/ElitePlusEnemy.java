@@ -7,7 +7,7 @@ public class ElitePlusEnemy extends AbstractEnemy {
     private int shootNum = 2;
     @Override
     public double getDropProb(){
-        return 1.0;
+        return 0.6;
     }
 
     @Override
@@ -17,6 +17,7 @@ public class ElitePlusEnemy extends AbstractEnemy {
 
     public ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
+        super.dropNum = 1;
         bulletStrategy = new Direct(shootNum);
     }
 

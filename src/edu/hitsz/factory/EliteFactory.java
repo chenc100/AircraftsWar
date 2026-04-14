@@ -13,6 +13,6 @@ public class EliteFactory implements EnemyFactory {
                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
                 0,
                 8,
-                60);
+                30);
     }
 }

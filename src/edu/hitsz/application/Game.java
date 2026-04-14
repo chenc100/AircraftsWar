@@ -81,10 +81,6 @@ public class Game extends JPanel {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-
-                System.out.println(ImageManager.HERO_IMAGE.getHeight());
-                System.out.println(ImageManager.HERO_IMAGE.getWidth());
-
                 enemySpawnCounter++;
                 if (enemySpawnCounter >= enemySpawnCycle) {
                     enemySpawnCounter = 0;
@@ -95,14 +91,19 @@ public class Game extends JPanel {
                         //TODO boss同一时间内只有一架
                         int bossFlag = 0;
                         double probability = Math.random();
-                        if (probability < 0.1){
+                        System.out.println(probability);
+                        if (probability < 0.4){
                             enemyFactory = new MobFactory();
-                        } else if (probability < 0.2) {
+                            System.out.println("mob");
+                        } else if (probability < 0.7) {
                             enemyFactory = new EliteFactory();
-                        } else if (probability < 0.3) {
+                            System.out.println("Eli");
+                        } else if (probability < 0.9) {
                             enemyFactory = new ElitePlusFactory();
-                        } else if (probability >= 0.3) {
+                            System.out.println("plus");
+                        } else {
                             enemyFactory = new EliteProFactory();
+                            System.out.println("pro");
                         }
 
                         enemyAircrafts.add(enemyFactory.createEnemy());
@@ -220,7 +221,12 @@ public class Game extends JPanel {
                     if (enemyAircraft.notValid()) {
                         // 获得分数，产生道具补给
                         if (enemyAircraft instanceof AbstractEnemy){
-                            props.add( ((AbstractEnemy)enemyAircraft).dropProp()) ;
+                            List<AbstractProp> tempProps = ((AbstractEnemy)enemyAircraft).dropProp();
+                            for (AbstractProp prop : tempProps){
+                                if (prop != null){
+                                    props.add( prop ) ;
+                                }
+                            }
                         }
                         score += 10;
                     }
@@ -235,11 +241,11 @@ public class Game extends JPanel {
 
         //  我方获得道具，道具生效
         for (AbstractProp prop : props){
-            if (prop.notValid()){
+            if (prop.notValid()) {
                 continue;
             }
-            if (prop.crash(heroAircraft)){
-                //生效
+            if (prop.crash(heroAircraft)) {
+                    //生效
                 prop.function(heroAircraft);
                 prop.vanish();
                 score += 10;

@@ -11,9 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Direct implements BulletStrategy{
-    private int direction = 1;
     private int shootNum ;
-
 
     public Direct(int shootNum){
         this.shootNum = shootNum;
@@ -37,7 +35,7 @@ public class Direct implements BulletStrategy{
             // 子弹发射位置相对飞机位置向前偏移
             // 多个子弹横向分散
             if(aircraft instanceof HeroAircraft){
-                bullet = new HeroBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, 100);
+                bullet = new HeroBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
             }else {
                 bullet = new EnemyBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
             }

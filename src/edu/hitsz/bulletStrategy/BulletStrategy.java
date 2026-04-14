@@ -6,7 +6,7 @@ import edu.hitsz.bullet.BaseBullet;
 import java.util.List;
 
 public interface BulletStrategy {
-    int power = 10;
+    int power = 30;
 
     List<BaseBullet> setShoot(AbstractAircraft aircraft);
 }

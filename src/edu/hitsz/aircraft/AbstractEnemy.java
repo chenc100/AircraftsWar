@@ -6,6 +6,7 @@ import edu.hitsz.bulletStrategy.BulletStrategy;
 import edu.hitsz.tool.AbstractProp;
 import edu.hitsz.factory.PropFactory;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -26,6 +27,9 @@ public abstract class AbstractEnemy extends AbstractAircraft{
     //发射策略
     protected BulletStrategy bulletStrategy;
 
+    //掉落道具数量
+    protected int dropNum;
+
     public AbstractEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
@@ -41,22 +45,22 @@ public abstract class AbstractEnemy extends AbstractAircraft{
 
     @Override
     public List<BaseBullet> shoot(){
-        List<BaseBullet> bullets = bulletStrategy.setShoot(this);
-        return bullets;
+        return bulletStrategy.setShoot(this);
     }
 
     public abstract double getDropProb();
     public abstract int getPropType();
 
-    public AbstractProp dropProp(){
+    public List<AbstractProp> dropProp(){
         int x = this.getLocationX();
         int y = this.getLocationY();
-
+        List<AbstractProp> props = new LinkedList<>();
         if (Math.random() < getDropProb()){
-            return propFactory.createProp(random.nextInt(getPropType()), x, y, 0, propSpeedY);
+            for (int i=0; i<dropNum; i++){
+                props.add( propFactory.createProp(random.nextInt(getPropType()), x+(i * 2 - dropNum + 1) * 10, y, 0, propSpeedY));
+            }
         }
-
-        return null;
+        return props;
     }
 
 }
