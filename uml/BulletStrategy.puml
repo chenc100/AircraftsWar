@@ -35,7 +35,8 @@ abstract class AbstractAircraft{
 }
 
 class HeroAircraft{
-    +setStrategy(BulletStrategy strategy):void
+    + setStrategy(BulletStrategy strategy):void
+    + getBulletStrategy():void
 }
 
 AbstractAircraft --> BulletStrategy : use

@@ -4,6 +4,7 @@ import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.factory.*;
+import edu.hitsz.rank.DAOImpl;
 import edu.hitsz.tool.*;
 
 import javax.swing.*;
@@ -52,6 +53,9 @@ public class Game extends JPanel {
     //游戏结束标志
     private boolean gameOverFlag = false;
 
+    //数据操作对象
+    DAOImpl recordDao = new DAOImpl();
+
     public Game() {
         //单例类创建
         heroAircraft = HeroAircraft.getInstance(
@@ -88,22 +92,16 @@ public class Game extends JPanel {
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         //随机创建普通敌机和精英敌机
                         //TODO 修改随机方法
-                        //TODO boss同一时间内只有一架
                         int bossFlag = 0;
                         double probability = Math.random();
-                        System.out.println(probability);
                         if (probability < 0.4){
                             enemyFactory = new MobFactory();
-                            System.out.println("mob");
                         } else if (probability < 0.7) {
                             enemyFactory = new EliteFactory();
-                            System.out.println("Eli");
                         } else if (probability < 0.9) {
                             enemyFactory = new ElitePlusFactory();
-                            System.out.println("plus");
                         } else {
                             enemyFactory = new EliteProFactory();
-                            System.out.println("pro");
                         }
 
                         enemyAircrafts.add(enemyFactory.createEnemy());
@@ -274,7 +272,9 @@ public class Game extends JPanel {
     private void checkResultAction(){
         // 游戏结束检查英雄机是否存活
         if (heroAircraft.getHp() <= 0) {
-            timer.cancel(); // 取消定时器并终止所有调度任务
+            timer.cancel();// 取消定时器并终止所有调度任务
+            recordDao.addGameRecord(score);
+            recordDao.sortedRecord();
             gameOverFlag = true;
             System.out.println("Game Over!");
         }

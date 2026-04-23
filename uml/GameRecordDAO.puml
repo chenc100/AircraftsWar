@@ -1,0 +1,29 @@
+@startuml
+Interface DAO{
+    addGameRecord(int score):void
+    deleteRecord(String userName):void
+    getGameRecord():List<GameRecord>
+}
+
+class DAOImpl{
+    - url : String
+    - user : String
+    - password : String
+    + addGameRecord(int score): void
+    + getGameRecord():List<GameRecord>
+    + deleteRecord(String userName): void
+    + sortedRecord():void
+}
+
+DAO <|.. DAOImpl
+
+class GameRecord{
+    - score : int
+    - userName : String
+    - time : Timestamp
+    + getScore():int
+    + getUserName():String
+    + getTime():Timestamp
+}
+GameRecord --> DAOImpl
+@enduml
